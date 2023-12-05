@@ -1,0 +1,22 @@
+---
+- name: Set kubectl install target release
+  ansible.builtin.set_fact:
+    kubectl_version: "{{ lookup('ansible.builtin.url', 'https://dl.k8s.io/release/stable.txt', split_lines=False) }}"
+  when: kubectl_version is not defined
+
+- name: Set kubectl release facts
+  ansible.builtin.set_fact:
+    _kubectl_target: "{{ '.'.join(kubectl_version.split('.')[0:2]) }}"
+
+- name: Deploy on Debian systems
+  when: ansible_os_family == "Debian"
+  block:
+    - name: Install Debian package helpers
+      ansible.builtin.package:
+        name:
+          - apt-transport-https
+          - ca-certificates
+
+- name: Deploy on RedHat systems
+  when: ansible_os_family == "RedHat"
+  block:
