@@ -31,6 +31,7 @@
       ansible.builtin.get_url:
         url: "{{ _k8s_repo_url }}/deb/Release.key"
         dest: "{{ k8s_repo_keyring_debian }}"
+        mode: 0644
 
     - name: Configure apt repository
       ansible.builtin.apt_repository:
