@@ -48,6 +48,7 @@
     - name: Configure yum repository
       ansible.builtin.yum_repository:
         name: Kubernetes
+        description: Kubernetes upstream repo
         baseurl: "{{ _k8s_repo_url }}"
         enabled: true
         gpgkey: https://pkgs.k8s.io/core:/stable:/v1.28/rpm/repodata/repomd.xml.key
