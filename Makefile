@@ -10,7 +10,7 @@ REQUIREMENTS = requirements.yml
 
 all: install version lint test
 
-test: lint
+test: install
 	poetry run molecule test -s ${MOLECULE_SCENARIO}
 
 install:
