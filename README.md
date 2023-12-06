@@ -1,13 +1,9 @@
-# nephelaiio.kubectl
+# nephelaiio.k8s_repo
 
-[![Build Status](https://github.com/nephelaiio/ansible-role-kubectl/actions/workflows/molecule.yml/badge.svg)](https://github.com/nephelaiio/ansible-role-kubectl/actions/wofklows/molecule.yml)
-[![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-nephelaiio.kubectl.vim-blue.svg)](https://galaxy.ansible.com/nephelaiio/kubectl/)
+[![Build Status](https://github.com/nephelaiio/ansible-role-k8s-repo/actions/workflows/molecule.yml/badge.svg)](https://github.com/nephelaiio/ansible-role-k8s-repo/actions/wofklows/molecule.yml)
+[![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-nephelaiio.k8s-repo.vim-blue.svg)](https://galaxy.ansible.com/nephelaiio/k8s-repo/)
 
-<!--
-[![Ansible Galaxy](https://img.shields.io/badge/dynamic/json?color=blueviolet&label=nephelaiio/kubectl&query=%24.summary_fields.versions%5B0%5D.name&url=https%3A%2F%2Fgalaxy.ansible.com%2Fapi%2Fv1%2Froles%2F<galaxy_id>%2F%3Fformat%3Djson)](https://galaxy.ansible.com/nephelaiio/kubectl/)
- -->
-
-An [ansible role](https://galaxy.ansible.com/nephelaiio/kubectl) to install and configure kubectl
+An [ansible role](https://galaxy.ansible.com/nephelaiio/k8s-repo) to install and configure Kubernetes package repostiories
 
 ## Role Variables
 
@@ -21,8 +17,7 @@ By default this role does not depend on any external roles. If any such dependen
 
 - hosts: servers
   roles:
-     - role: nephelaiio.kubectl
-       kubectl_package_state: latest
+     - role: nephelaiio.k8s_repo
 
 ## Testing
 
@@ -30,10 +25,10 @@ Please make sure your environment has [docker](https://www.docker.com) installed
 
 Role is tested against the following distributions (docker images):
 
-  * Ubuntu Focal
   * Ubuntu Jammy
-  * Debian Buster
+  * Ubuntu Focal
   * Debian Bullseye
+  * Debian Bookworm
 
 You can test the role directly from sources using command ` molecule test `
 

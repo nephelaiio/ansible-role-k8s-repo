@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "nephelaiio.kubectl"
+name = "nephelaiio.k8s_repo"
 version = "0.1.0"
 description = ""
 authors = ["nephelaiio"]

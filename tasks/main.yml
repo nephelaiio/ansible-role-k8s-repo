@@ -1,22 +1,52 @@
 ---
-- name: Set kubectl install target release
+- name: Set Kubernetes repository version
   ansible.builtin.set_fact:
-    kubectl_version: "{{ lookup('ansible.builtin.url', 'https://dl.k8s.io/release/stable.txt', split_lines=False) }}"
-  when: kubectl_version is not defined
+    k8s_repo_version: "{{ lookup('ansible.builtin.url', 'https://dl.k8s.io/release/stable.txt', split_lines=False) }}"
+  when: k8s_repo_version is not defined
 
-- name: Set kubectl release facts
+- name: Set Kuberentes repository release facts
   ansible.builtin.set_fact:
-    _kubectl_target: "{{ '.'.join(kubectl_version.split('.')[0:2]) }}"
+    _k8s_repo_target: "{{ '.'.join(k8s_repo_version.split('.')[0:2]) }}"
 
-- name: Deploy on Debian systems
+- name: Configure Kubernetes apt repository
   when: ansible_os_family == "Debian"
   block:
+    - name: Create tempfile
+      ansible.builtin.tempfile:
+        suffix: k8s
+
+    - name: Set distribution facts
+      ansible.builtin.set_fact:
+        _apt_repo_url: "https://pkgs.k8s.io/core:/stable:/{{ _k8s_repo_target }}/deb"
+
     - name: Install Debian package helpers
       ansible.builtin.package:
         name:
           - apt-transport-https
           - ca-certificates
+          - curl
 
-- name: Deploy on RedHat systems
+    - name: Create keyring directory
+      ansible.builtin.file:
+        path: "{{ k8s_repo_keyring_debian | dirname }}"
+        state: directory
+        owner: root
+        group: root
+        mode: 0755
+
+    - name: Install gpg certificate
+      ansible.builtin.shell:
+        cmd: >-
+          curl -fsSL {{ _apt_repo_url }}/Release.key | gpg --dearmor -o {{ k8s_repo_keyring_debian }}
+        executable: /bin/bash
+      changed_when: false
+
+    - name: Configure apt repository
+      ansible.builtin.apt_repository:
+        filename: k8s_repo
+        repo: "deb [signed-by={{ k8s_repo_keyring_debian }}] {{ _apt_repo_url }} /"
+
+- name: Configure Kubernetes yum repository
   when: ansible_os_family == "RedHat"
   block:
+    - fail:

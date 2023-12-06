@@ -1,9 +1,6 @@
 ---
 - name: Converge
-
   hosts: all
-
+  become: true
   roles:
-
-    - nephelaiio.plugins
-    - nephelaiio.kubectl
+    - nephelaiio.k8s_repo

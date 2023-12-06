@@ -7,7 +7,7 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: kubectl-install-01
+  - name: k8s-repo-install-01
     image: "geerlingguy/docker-${MOLECULE_DOCKER_IMAGE:-ubuntu2004}-ansible:latest"
     command: ${MOLECULE_DOCKER_COMMAND:-""}
     cgroupns_mode: host

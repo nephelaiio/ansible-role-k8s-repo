@@ -14,7 +14,7 @@ on:
 defaults:
 
   run:
-    working-directory: 'nephelaiio.kubectl'
+    working-directory: 'nephelaiio.k8s_repo'
 
 jobs:
 
@@ -26,7 +26,7 @@ jobs:
       - name: Check out the codebase.
         uses: actions/checkout@v4
         with:
-          path: 'nephelaiio.kubectl'
+          path: 'nephelaiio.k8s_repo'
 
       - name: Set up Python 3
         uses: actions/setup-python@v4
