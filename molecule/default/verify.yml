@@ -1,6 +1,10 @@
 ---
 - name: Verify
   hosts: all
-  gather_facts: true
   become: true
+  roles:
+    - nephelaiio.k8s_repo
   tasks:
+    - name: Install kubectl
+      ansible.builtin.package:
+        name: kubectl

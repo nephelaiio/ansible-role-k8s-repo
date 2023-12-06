@@ -1,4 +1,4 @@
 ---
 # k8s_repo_release: v1.28
 k8s_repo_state: latest
-k8s_repo_keyring_debian: /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+k8s_repo_keyring_debian: /etc/apt/keyrings/kubernetes-apt-keyring.asc

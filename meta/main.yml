@@ -15,6 +15,6 @@ galaxy_info:
     - name: Debian
       versions:
         - all
-  galaxy_tags: ['k8s', 'k8s_repo', 'repo', 'repository']
+  galaxy_tags: ['k8s', 'k8s', 'repo', 'repository']
 
 dependencies: []

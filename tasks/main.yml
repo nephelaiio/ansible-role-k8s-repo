@@ -6,25 +6,18 @@
 
 - name: Set Kuberentes repository release facts
   ansible.builtin.set_fact:
-    _k8s_repo_target: "{{ '.'.join(k8s_repo_version.split('.')[0:2]) }}"
+    _k8s_repo_url: "https://pkgs.k8s.io/core:/stable:/{{ _repo_target }}/"
+  vars:
+    _repo_target: "{{ '.'.join(k8s_repo_version.split('.')[0:2]) }}"
 
 - name: Configure Kubernetes apt repository
   when: ansible_os_family == "Debian"
   block:
-    - name: Create tempfile
-      ansible.builtin.tempfile:
-        suffix: k8s
-
-    - name: Set distribution facts
-      ansible.builtin.set_fact:
-        _apt_repo_url: "https://pkgs.k8s.io/core:/stable:/{{ _k8s_repo_target }}/deb"
-
     - name: Install Debian package helpers
       ansible.builtin.package:
         name:
           - apt-transport-https
           - ca-certificates
-          - curl
 
     - name: Create keyring directory
       ansible.builtin.file:
@@ -34,19 +27,27 @@
         group: root
         mode: 0755
 
-    - name: Install gpg certificate
-      ansible.builtin.shell:
-        cmd: >-
-          curl -fsSL {{ _apt_repo_url }}/Release.key | gpg --dearmor -o {{ k8s_repo_keyring_debian }}
-        executable: /bin/bash
-      changed_when: false
+    - name: Retrieve repository release key
+      ansible.builtin.get_url:
+        url: "{{ _k8s_repo_url }}/deb/Release.key"
+        dest: "{{ k8s_repo_keyring_debian }}"
 
     - name: Configure apt repository
       ansible.builtin.apt_repository:
         filename: k8s_repo
-        repo: "deb [signed-by={{ k8s_repo_keyring_debian }}] {{ _apt_repo_url }} /"
+        repo: "deb [signed-by={{ k8s_repo_keyring_debian }}] {{ _k8s_repo_url }}/deb /"
+
+    - name: Update apt cache
+      ansible.builtin.apt:
+        update_cache: true
 
 - name: Configure Kubernetes yum repository
   when: ansible_os_family == "RedHat"
   block:
-    - fail:
+    - name: Configure yum repository
+      ansible.builtin.yum_repository:
+        name: Kubernetes
+        baseurl: "{{ _k8s_repo_url }}"
+        enabled: true
+        gpgkey: https://pkgs.k8s.io/core:/stable:/v1.28/rpm/repodata/repomd.xml.key
+        gpgcheck: true
