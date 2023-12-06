@@ -1,9 +1,9 @@
 # nephelaiio.k8s_repo
 
-[![Build Status](https://github.com/nephelaiio/ansible-role-k8s-repo/actions/workflows/molecule.yml/badge.svg)](https://github.com/nephelaiio/ansible-role-k8s-repo/actions/wofklows/molecule.yml)
-[![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-nephelaiio.k8s-repo.vim-blue.svg)](https://galaxy.ansible.com/nephelaiio/k8s-repo/)
+[![Build Status](https://github.com/nephelaiio/ansible-role-k8s_repo/actions/workflows/molecule.yml/badge.svg)](https://github.com/nephelaiio/ansible-role-k8s_repo/actions/wofklows/molecule.yml)
+[![Ansible Galaxy](http://img.shields.io/badge/ansible--galaxy-nephelaiio.k8s_repo.vim-blue.svg)](https://galaxy.ansible.com/nephelaiio/k8s_repo/)
 
-An [ansible role](https://galaxy.ansible.com/nephelaiio/k8s-repo) to install and configure Kubernetes package repostiories
+An [ansible role](https://galaxy.ansible.com/nephelaiio/k8s_repo) to install and configure Kubernetes package repostiories
 
 ## Role Variables
 
